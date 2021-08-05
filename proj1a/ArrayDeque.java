@@ -1,6 +1,4 @@
-package PJ1a;
-
-public class ArrayDeque<T> implements Deque<T> {
+public class ArrayDeque<T> {
     private T[] items;
     private int size;
     private int firstPointer;
@@ -29,7 +27,7 @@ public class ArrayDeque<T> implements Deque<T> {
         this.items = newItems;
     }
 
-    @Override
+
     public void addFirst(T item){
         if(size == items.length){
             resizing(2*size);
@@ -40,7 +38,7 @@ public class ArrayDeque<T> implements Deque<T> {
     }
 
 
-    @Override
+
     public void addLast(T item){
         if(size == items.length){
             resizing(2*size);
@@ -51,19 +49,18 @@ public class ArrayDeque<T> implements Deque<T> {
     }
 
 
-    @Override
     public boolean isEmpty(){
         return (size == 0);
     }
 
 
-    @Override
+
     public int size(){
         return size;
     }
 
 
-    @Override
+
     public T removeFirst(){
         size -= 1;
         T result = items[firstPointer];
@@ -72,7 +69,7 @@ public class ArrayDeque<T> implements Deque<T> {
     }
 
 
-    @Override
+
     public T removeLast(){
         size -= 1;
         lastPointer = (lastPointer + items.length - 1) % items.length;
@@ -81,7 +78,7 @@ public class ArrayDeque<T> implements Deque<T> {
     }
 
 
-    @Override
+
     public T get(int index){
         if(index > size - 1){
             return null;
@@ -92,7 +89,7 @@ public class ArrayDeque<T> implements Deque<T> {
     }
 
 
-    @Override
+
     public void printDeque(){
         int i = 0;
         while(i < size){

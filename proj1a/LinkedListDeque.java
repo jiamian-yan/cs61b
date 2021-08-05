@@ -1,6 +1,4 @@
-package PJ1a;
-
-public class LinkedListDeque<T> implements Deque<T>{
+public class LinkedListDeque<T> {
     public static class Node<T>{
         Node prev;
         T item;
@@ -32,7 +30,7 @@ public class LinkedListDeque<T> implements Deque<T>{
     }
 
 
-    @Override
+
     public void addFirst(T item){
         this.size += 1;
         Node temporaryNode = this.senF.next;
@@ -41,7 +39,7 @@ public class LinkedListDeque<T> implements Deque<T>{
     }
 
 
-    @Override
+
     public void addLast(T item){
         this.size += 1;
         Node temporaryNode = this.senB.prev;
@@ -50,7 +48,7 @@ public class LinkedListDeque<T> implements Deque<T>{
     }
 
 
-    @Override
+
     public boolean isEmpty(){
         if(this.size == 0)
             return true;
@@ -58,13 +56,12 @@ public class LinkedListDeque<T> implements Deque<T>{
     }
 
 
-    @Override
     public int size(){
         return size;
     }
 
 
-    @Override
+
     public void printDeque(){
         Node p = this.senF.next;
         for(int i = 0; i < size; i++){
@@ -75,7 +72,7 @@ public class LinkedListDeque<T> implements Deque<T>{
     }
 
 
-    @Override
+
     public T removeFirst(){
         if(size == 0){
             return null;
@@ -90,7 +87,7 @@ public class LinkedListDeque<T> implements Deque<T>{
     }
 
 
-    @Override
+
     public T removeLast(){
         if(size == 0){
             return null;
@@ -105,7 +102,7 @@ public class LinkedListDeque<T> implements Deque<T>{
     }
 
 
-    @Override
+
     public T get(int index){
         if(index < 0 || index >= this.size){
             return null;
