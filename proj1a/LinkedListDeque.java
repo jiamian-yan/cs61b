@@ -1,130 +1,90 @@
-public class LinkedListDeque<T> {
-    public static class Node<T>{
-        Node prev;
-        T item;
-        Node next;
+import PJ1.Deque;
 
-        public Node(Node p, T i, Node n){
+public class LinkedListDeque<T>  {
+
+    private class Node{
+        T value;
+        PJ1.LinkedListDeque.Node prev;
+        PJ1.LinkedListDeque.Node next;
+
+        private Node(T v, PJ1.LinkedListDeque.Node p, PJ1.LinkedListDeque.Node n){
+            this.value = v;
             this.prev = p;
-            this.item = i;
             this.next = n;
         }
     }
 
-    /** invariants:
-     * senF.prev == null  &&  senF.item == 0;
-     * senF.next is the first node(if it exists) of LinkedListDeque
-     * senB.prev is the last node(if it exists) of LinkedListDeque
-     * senB.item == 0 && senB.next == null
-     * **/
-    private final Node senF;
+    private PJ1.LinkedListDeque.Node sentinel;
     private int size;
-    private final Node senB;
 
     public LinkedListDeque(){
-        this.senF = new Node(null, 0, null);
-        this.senB = new Node(null, 0, null);
-        this.senF.next = this.senB;
-        this.senB.prev = this.senF;
-        this.size = 0;
+        sentinel = new PJ1.LinkedListDeque.Node((T)null, null, null);
+        sentinel.prev = sentinel;
+        sentinel.next = sentinel;
+        size = 0;
     }
 
-
-
-    public void addFirst(T item){
-        this.size += 1;
-        Node temporaryNode = this.senF.next;
-        this.senF.next = new Node(senF, item, temporaryNode);
-        temporaryNode.prev = this.senF.next;
+    public void addFirst(T item) {
+        PJ1.LinkedListDeque.Node newNode = new PJ1.LinkedListDeque.Node(item, sentinel, sentinel.next);
+        sentinel.next.prev = newNode;
+        sentinel.next = newNode;
+        size++;
     }
 
-
-
-    public void addLast(T item){
-        this.size += 1;
-        Node temporaryNode = this.senB.prev;
-        this.senB.prev = new Node(temporaryNode, item, senB);
-        temporaryNode.next = this.senB.prev;
+    public void addLast(T item) {
+        PJ1.LinkedListDeque.Node newNode = new PJ1.LinkedListDeque.Node(item, sentinel.prev, sentinel);
+        sentinel.prev.next = newNode;
+        sentinel.prev = newNode;
+        size++;
     }
 
-
-
-    public boolean isEmpty(){
-        if(this.size == 0)
-            return true;
-        return false;
+    public boolean isEmpty() {
+        return (size == 0);
     }
 
-
-    public int size(){
+    public int size() {
         return size;
     }
 
-
-
-    public void printDeque(){
-        Node p = this.senF.next;
+    public void printDeque() {
+        Node p = this.sentinel;
         for(int i = 0; i < size; i++){
-            System.out.print(p.item + " ");
+            System.out.print(p.value + " ");
             p = p.next;
         }
         System.out.println('\n');
     }
 
-
-
-    public T removeFirst(){
+    public T removeFirst() {
         if(size == 0){
             return null;
         }
-        else{
-            size -= 1;
-            T result = (T) senF.next.item;
-            senF.next = senF.next.next;
-            senF.next.prev = senF;
-            return result;
-        }
+        T result = sentinel.next.value;
+        sentinel.next = sentinel.next.next;
+        sentinel.next.prev = sentinel;
+        size--;
+        return result;
     }
 
-
-
-    public T removeLast(){
+    public T removeLast() {
         if(size == 0){
             return null;
         }
-        else{
-            size -= 1;
-            T result = (T) senB.prev.item;
-            (senB.prev) = (senB.prev).prev;
-            (senB.prev).next = senB;
-            return result;
-        }
+        T result = sentinel.prev.value;
+        sentinel.prev = sentinel.prev.prev;
+        sentinel.prev.next = sentinel;
+        size--;
+        return result;
     }
 
-
-
-    public T get(int index){
-        if(index < 0 || index >= this.size){
+    public T get(int index) {
+        if(index < 0 || index+1 > size ){
             return null;
         }
-        Node pointer = this.senF.next;
-        for(int i = 0; i < index; i++){
-            pointer = pointer.next;
+        PJ1.LinkedListDeque.Node p;
+        for(p = sentinel.next; index > 0; index--){
+            p = p.next;
         }
-        return (T)pointer.item;
+        return p.value;
     }
-
-    private T getRecursiveHelp(Node n, int index){
-        if(index == 0)
-            return (T)n.item;
-        return (T)getRecursiveHelp(n.next, index-1);
-    }
-
-    public T getRecursive(int index){
-        if(index < 0 || index >= this.size){
-            return null;
-        }
-        return (T)getRecursiveHelp(this.senF.next, index);
-    }
-
 }
