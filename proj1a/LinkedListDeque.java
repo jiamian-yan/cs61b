@@ -1,38 +1,36 @@
-import PJ1.Deque;
-
 public class LinkedListDeque<T>  {
 
     private class Node{
         T value;
-        PJ1.LinkedListDeque.Node prev;
-        PJ1.LinkedListDeque.Node next;
+        Node prev;
+        Node next;
 
-        private Node(T v, PJ1.LinkedListDeque.Node p, PJ1.LinkedListDeque.Node n){
+        private Node(T v, Node p, Node n){
             this.value = v;
             this.prev = p;
             this.next = n;
         }
     }
 
-    private PJ1.LinkedListDeque.Node sentinel;
+    private Node sentinel;
     private int size;
 
     public LinkedListDeque(){
-        sentinel = new PJ1.LinkedListDeque.Node((T)null, null, null);
+        sentinel = new Node((T)null, null, null);
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
         size = 0;
     }
 
     public void addFirst(T item) {
-        PJ1.LinkedListDeque.Node newNode = new PJ1.LinkedListDeque.Node(item, sentinel, sentinel.next);
+        Node newNode = new Node(item, sentinel, sentinel.next);
         sentinel.next.prev = newNode;
         sentinel.next = newNode;
         size++;
     }
 
     public void addLast(T item) {
-        PJ1.LinkedListDeque.Node newNode = new PJ1.LinkedListDeque.Node(item, sentinel.prev, sentinel);
+        Node newNode = new Node(item, sentinel.prev, sentinel);
         sentinel.prev.next = newNode;
         sentinel.prev = newNode;
         size++;
@@ -81,7 +79,7 @@ public class LinkedListDeque<T>  {
         if(index < 0 || index+1 > size ){
             return null;
         }
-        PJ1.LinkedListDeque.Node p;
+        Node p;
         for(p = sentinel.next; index > 0; index--){
             p = p.next;
         }

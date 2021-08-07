@@ -62,24 +62,39 @@ public class ArrayDeque<T> {
 
 
     public T removeFirst(){
+        if(size == 0){
+            return null;
+        }
         size -= 1;
         T result = items[firstPointer];
         firstPointer = (firstPointer + 1) % items.length;
         return result;
+        if(size < items.length / 4){
+            resizing(items.length / 2);
+        }
     }
 
 
 
     public T removeLast(){
+        if(size == 0){
+            return null;
+        }
         size -= 1;
         lastPointer = (lastPointer + items.length - 1) % items.length;
         T result = items[lastPointer];
+        if(size < items.length / 4){
+            resizing(items.length / 2);
+        }
         return result;
     }
 
 
 
     public T get(int index){
+        if(size == 0){
+            return null;
+        }
         if(index > size - 1){
             return null;
         }
